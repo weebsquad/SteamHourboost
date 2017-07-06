@@ -1,28 +1,48 @@
 module.exports = { // Edit below
 	
-	
-	Accounts: { // Accounts to hourboost
+	//
+	// Actual accounts to hourboost
+	//
+	Accounts: {
 		"username": "password",
 	},
 	
-	TwofacSecrets: { // Secrets for accounts for 2factor generation (only needed if using 2factor for your account. // DO NOT FILL THIS IN IF NOT USING 2factor)
+	//
+	// If your account has Two Factor Authentication enabled,
+	// Set your shared_secret below for it.
+	//
+	TwofacSecrets: {
 		"username": "shared_secret",
 	},
 	
+	//
+	// Games to idle, per-account
+	//
 	Games: { // Games to boost per account
 		"username": "Team Fortress 2",
 	},
 	
+	//
+	// A table containing steam app-ids for games, lazy to add more.
+	//
 	GameDefs: {
 		"Team Fortress 2": 440,
 		"Hunie Pop": 339800,
 	},
 	
 	// Logging
-	enabled_output: ["failed-command", "warn", "info", "error", "success", "chat-mention", "chat-command", "debug"],
-	output_log: ["failed-command", "warn", "info", "error", "success", "chat-mention", "chat-command", "debug"],
+	
+	// Existent types of outputting log
+	output_log: [ "warn", "info", "error", "success", "debug" ],
+	
+	// Types of output which will be printed on your console
+	enabled_output: [ "warn", "info", "error", "success", "debug" ],
+	
+	// Path for the log file
 	log_file: "log.txt",
-	max_log_size: 50, // In Mb
+	
+	// Max file size in MB for the log file before it's cleared
+	max_log_size: 50,
 	
 	
 	
