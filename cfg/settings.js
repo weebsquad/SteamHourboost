@@ -2,7 +2,6 @@ module.exports = { // Edit below
 	
 	//
 	// Actual accounts to hourboost
-	//
 	Accounts: {
 		"username": "password",
 	},
@@ -10,14 +9,12 @@ module.exports = { // Edit below
 	//
 	// If your account has Two Factor Authentication enabled,
 	// Set your shared_secret below for it.
-	//
 	TwofacSecrets: {
 		"username": "shared_secret",
 	},
 	
 	//
 	// Games to idle, per-account
-	//
 	Games: { // Games to boost per account
 		"username": "Team Fortress 2",
 	},
@@ -30,7 +27,6 @@ module.exports = { // Edit below
 		"Hunie Pop": 339800,
 	},
 	
-	// Logging
 	
 	// Existent types of outputting log
 	output_log: [ "warn", "info", "error", "success", "debug" ],
