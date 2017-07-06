@@ -1,0 +1,22 @@
+{
+  "name": "steamhourboost",
+  "version": "1.0.0",
+  "description": "A bot to farm steam game hours with multi-user support",
+  "main": "bin/main.js",
+  "bin": {
+    "steamhourboost": "configChecker.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "MetalRuller",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^2.0.1",
+    "colors": "^1.1.2",
+    "dateformat": "^2.0.0",
+    "fs": "0.0.1-security",
+    "steam-totp": "^2.0.1",
+    "steam-user": "^3.21.7"
+  }
+}
