@@ -1,2 +1,8 @@
 # SteamHourboost
-A steam hourboost bot with multi-user support!
+### A Steam game hour idling software!
+
+####Features:
+* Fully automatic
+* Multi-user support
+* Per-user game selection
+
