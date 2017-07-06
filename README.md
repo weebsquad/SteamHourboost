@@ -4,8 +4,8 @@
 
 **Features:**
 * Fully automatic
-* Multi-user support
-* Per-user game selection
+* Multi-account support
+* Per-account game selection
 
 **Main Libs:**
 * [node-steam-user](https://github.com/DoctorMcKay/node-steam-user)
