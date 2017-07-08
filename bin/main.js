@@ -10,7 +10,7 @@ const config = require("../cfg/settings.js");
 const configChecker = require("../bin/configChecker.js");
 const SteamTotp = require("steam-totp");
 
-const test_config = configChecker.CheckConfig(config);
+const test_config = configChecker.checkConfig(config);
 if(test_config !== "fine") {
 	utils.print("error", "Got configuration errors:" + test_config);
 	return;
