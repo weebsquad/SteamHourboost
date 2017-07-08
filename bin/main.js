@@ -89,10 +89,12 @@ function DoUserLogin(username, password) {
 		client.on('steamGuard', function(domain, callback, lastCodeWrong) {
 			if(lastCodeWrong == true) {
 				utils.print("error", "Failed to generate steamguard code for " + username + ", skipping");
-				delete action_todo[username];
-				client.logOff();
-				delete client;
-				DoNext();
+				setTimeout(function() {
+					delete action_todo[username];
+					client.logOff();
+					delete client;
+					DoNext();
+				}, 120000);
 				return;
 			}
 			var code = SteamTotp.generateAuthCode(config.TwofacSecrets[username])
@@ -117,9 +119,9 @@ function DoUserLogin(username, password) {
 		if(blocked == true) {
 			utils.print("warn", "Stopped botting on " + username + ", started game elsewhere, skipping in 2m");
 			client.setPersona(SteamUser.EPersonaState.Online);
-			client.logOff();
-			delete client;
 			setTimeout(function() {
+				client.logOff();
+				delete client;
 				delete action_todo[username];
 				action_todo[username] = password;
 				DoNext();
@@ -131,15 +133,15 @@ function DoUserLogin(username, password) {
 		utils.print("error", String(e));
 		// Some error occurred during logon
 		if(String(e).toLowerCase() == "Error: RateLimitExceeded".toLowerCase()) {
-			utils.print("warn", "Rate limit exceeded... waiting 10mins");
-			utils.pause(600000);
+			utils.print("warn", "Rate limit exceeded... waiting 45mins");
+			utils.pause(2700000);
 			utils.print("warn", "exiting");
 			process.exit();
 		} else if(String(e).toLowerCase() == "Error: LoggedInElsewhere".toLowerCase()) {
 			utils.print("warn", "Logged in elsewhere... trying to login again in 30s");
-			client.logOff();
-			delete client;
 			setTimeout(function() {
+				client.logOff();
+				delete client;
 				action_todo[username] = password;
 				DoNext();
 			}, 30000);
