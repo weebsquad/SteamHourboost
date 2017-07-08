@@ -119,10 +119,10 @@ function DoUserLogin(username, password) {
 		if(blocked == true) {
 			utils.print("warn", "Stopped botting on " + username + ", started game elsewhere, skipping in 2m");
 			client.setPersona(SteamUser.EPersonaState.Online);
+			client.logOff();
+			delete client;
+			delete action_todo[username];
 			setTimeout(function() {
-				client.logOff();
-				delete client;
-				delete action_todo[username];
 				action_todo[username] = password;
 				DoNext();
 			}, 120000);
@@ -137,14 +137,16 @@ function DoUserLogin(username, password) {
 			utils.pause(2700000);
 			utils.print("warn", "exiting");
 			process.exit();
-		} else if(String(e).toLowerCase() == "Error: LoggedInElsewhere".toLowerCase()) {
-			utils.print("warn", "Logged in elsewhere... trying to login again in 30s");
+		} else if(String(e).toLowerCase() == "Error: LoggedInElsewhere".toLowerCase() || String(e).toLowerCase() == "Error: LogonSessionReplaced".toLowerCase()) {
+			utils.print("warn", "Logged in elsewhere... trying to login again in 2m");
+			client.logOff();
+			delete client;
+			delete action_todo[username];
 			setTimeout(function() {
 				client.logOff();
-				delete client;
 				action_todo[username] = password;
 				DoNext();
-			}, 30000);
+			}, 120000);
 		}
 	});
 	client.logOn(_c);
@@ -153,5 +155,6 @@ function DoUserLogin(username, password) {
 
 utils.print("Resetting action list");
 ResetTodoList();
+utils.pause(10000);
 utils.print("Starting bot");
 DoNext();
