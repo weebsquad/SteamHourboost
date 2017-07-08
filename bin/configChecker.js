@@ -7,7 +7,7 @@ const utils = require("../bin/util.js");
 
 
 
-configChecker.CheckConfig = function(obj) {
+configChecker.checkConfig = function(obj) {
 	if(typeof(obj) !== "object" || utils.isArray(obj) !== false) {
 		return "Invalid cfg object";
 	}
