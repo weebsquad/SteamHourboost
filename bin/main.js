@@ -61,23 +61,29 @@ function doNext(step, obj) {
 				if(step === "startGame") {
 					if(typeof(obj.publicIP) !== "undefined" && typeof(obj.cellID) !== "undefined") {
 						var usersGame = config.Games[_username];
-						if(typeof(usersGame) !== "string" && typeof(usersGame) !== "object") {
+						if(typeof(usersGame) !== "string" && typeof(usersGame) !== "object" && utils.isArray(usersGame) !== true) {
 							utils.print("error", "No game defined for user " + _username);
 							return;
 						}
 						obj.setPersona(SteamUser.EPersonaState.Offline);
-						obj.gamesPlayed(GetGameId(usersGame));
+						if(typeof(usersGame) === "object" && utils.isArray(usersGame) === true) {
+							var ids = new Array();
+							usersGame.forEach(function(gamen) {
+								ids.push(GetGameId(gamen));
+							});
+							obj.gamesPlayed(ids);
+						} else {
+							obj.gamesPlayed(GetGameId(usersGame));
+						}
 						delete actionTodo[_username];
-						if(typeof(usersGame) == "string") {
+						if(typeof(usersGame) === "string") {
 							utils.print("success", "Account <" + _username + "> is now playing " + usersGame);
 						} else {
 							var _gamespl = "";
 							for(var i = 0; i < usersGame.length; i++) {
-								if(typeof(usersGame[i]) !== "undefined") {
-									_gamespl + _gamespl + "**" + usersGame[i] + "**";
-									if(i !== usersGame.length-1) {
-										_gamespl = _gamespl + ", ";
-									}
+								_gamespl = _gamespl + usersGame[i];
+								if(i !== usersGame.length-1) {
+									_gamespl = _gamespl + ", ";
 								}
 							}
 							utils.print("success", "Account <" + _username + "> is now playing : " + _gamespl);
