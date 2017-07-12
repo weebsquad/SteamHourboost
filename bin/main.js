@@ -68,7 +68,20 @@ function doNext(step, obj) {
 						obj.setPersona(SteamUser.EPersonaState.Offline);
 						obj.gamesPlayed(GetGameId(usersGame));
 						delete actionTodo[_username];
-						utils.print("success", "Account <" + _username + "> is now playing " + usersGame);
+						if(typeof(usersGame) == "string") {
+							utils.print("success", "Account <" + _username + "> is now playing " + usersGame);
+						} else {
+							var _gamespl = "";
+							for(var i = 0; i < usersGame.length; i++) {
+								if(typeof(usersGame[i]) !== "undefined") {
+									_gamespl + _gamespl + "**" + usersGame[i] + "**";
+									if(i !== usersGame.length-1) {
+										_gamespl = _gamespl + ", ";
+									}
+								}
+							}
+							utils.print("success", "Account <" + _username + "> is now playing : " + _gamespl);
+						}
 						setTimeout(function() {
 							doNext();
 						}, 60000);
