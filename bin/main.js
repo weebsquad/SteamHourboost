@@ -61,7 +61,7 @@ function doNext(step, obj) {
 				if(step === "startGame") {
 					if(typeof(obj.publicIP) !== "undefined" && typeof(obj.cellID) !== "undefined") {
 						var usersGame = config.Games[_username];
-						if(typeof(usersGame) !== "string") {
+						if(typeof(usersGame) !== "string" && typeof(usersGame) !== "object") {
 							utils.print("error", "No game defined for user " + _username);
 							return;
 						}
