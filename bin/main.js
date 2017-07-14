@@ -66,6 +66,20 @@ function doNext(step, obj) {
 							return;
 						}
 						obj.setPersona(SteamUser.EPersonaState.Offline);
+						var _rapps = new Array();
+						if(typeof(usersGame) === "string") {
+							if(usersGame === "tons") {
+								var _all = obj.getOwnedPackages();
+								console.log(_all.length);
+								for(var i = 0; i < 30; i++) {
+									var _i = _all[utils.getRandomInt(0, _all.length)];
+									while (_rapps.contains(_i)) {
+										_i = _all[utils.getRandomInt(0, _all.length)];
+									}
+									_rapps.push(_i);
+								}
+							}
+						}
 						if(typeof(usersGame) === "object" && utils.isArray(usersGame) === true) {
 							var ids = new Array();
 							usersGame.forEach(function(gamen) {
@@ -73,11 +87,19 @@ function doNext(step, obj) {
 							});
 							obj.gamesPlayed(ids);
 						} else {
-							obj.gamesPlayed(GetGameId(usersGame));
+							if(usersGame !== "tons") {
+								obj.gamesPlayed(GetGameId(usersGame));
+							} else {
+								obj.gamesPlayed(_rapps);
+							}
 						}
 						delete actionTodo[_username];
 						if(typeof(usersGame) === "string") {
-							utils.print("success", "Account <" + _username + "> is now playing " + usersGame);
+							if(usersGame !== "tons") {
+								utils.print("success", "Account <" + _username + "> is now playing " + usersGame);
+							} else {
+								utils.print("success", "Account <" + _username + "> is now playing " + _rapps.length + " games!");
+							}
 						} else {
 							var _gamespl = "";
 							for(var i = 0; i < usersGame.length; i++) {
@@ -106,10 +128,15 @@ function doUserLogin(username, password) {
 	var _c = {
 		"accountName": username,
 		"password": password,
-		"machineName": "HourBooster Bot(MetalRuller)"
+		"machineName": "HourBooster Bot(MetalRuller)",
 	};
 	var client = new SteamUser();
 	client.options.autoRelogin = true;
+	if(typeof(config.Games[username]) === "string") {
+		if(config.Games[username] === "tons") {
+			client.options.enablePicsCache = true;
+		}
+	}
 	
 	if(typeof(config.TwofacSecrets[username]) === "string") {
 		client.options.promptSteamGuardCode = false;

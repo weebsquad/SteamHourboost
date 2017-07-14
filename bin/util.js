@@ -51,6 +51,24 @@ var randomProperty = function (obj) {
 metullfuncs.randomProperty = randomProperty;
 
 
+
+Array.prototype.contains = function(obj) {
+    var i = this.length;
+    while (i--) {
+        if (this[i] === obj) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+metullfuncs.getRandomInt = getRandomInt;
+
 function print(mode, text)
 {
 	if(text == "undefined" || typeof(text) == "undefined") {
