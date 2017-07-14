@@ -15,8 +15,26 @@ module.exports = { // Edit below
 	
 	//
 	// Games to idle, per-account
-	Games: { // Games to boost per account
-		"username": "Team Fortress 2",
+	GameDefs: {
+		"Team Fortress 2": 440,
+		"Hunie Pop": 339800,
+		"Rising Storm/Red Orchestra 2 Multiplayer": 35450,
+		"SpeedRunners": 207140,
+		"Garry's Mod": 4000,
+		"Dota 2": 570,
+		"Terraria": 105600,
+		"PAYDAY 2": 218620,
+		"Counter-Strike: Global Offensive": 730,
+		"Counter-Strike": 10,
+		"Counter-Strike: Source": 240,
+		"Factorio": 427520,
+		"Borderlands 2": 49520,
+		"Risk of Rain": 248820,
+		"Just Cause 3": 225540,
+		"Plague Inc: Evolved": 246620,
+		"Insurgency": 222880,
+		"Stellaris": 281990,
+		"Battlefield: Bad Company™ 2": 24960,
 	},
 	
 	//
