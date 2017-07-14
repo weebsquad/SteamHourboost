@@ -70,7 +70,6 @@ function doNext(step, obj) {
 						if(typeof(usersGame) === "string") {
 							if(usersGame === "tons") {
 								var _all = obj.getOwnedPackages();
-								console.log(_all.length);
 								for(var i = 0; i < 30; i++) {
 									var _i = _all[utils.getRandomInt(0, _all.length)];
 									while (_rapps.contains(_i)) {
