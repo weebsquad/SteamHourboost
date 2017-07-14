@@ -144,7 +144,7 @@ function doUserLogin(username, password) {
 	
 	client.on("playingState", function(blocked) {
 		if(blocked === true) {
-			utils.print("warn", "Stopped botting on " + username + ", started game elsewhere, skipping in 2m");
+			utils.print("warn", "Stopped botting on " + username + ", started game elsewhere, skipping in 5m");
 			client.setPersona(SteamUser.EPersonaState.Online);
 			client.logOff();
 			delete client;
@@ -152,7 +152,7 @@ function doUserLogin(username, password) {
 			setTimeout(function() {
 				actionTodo[username] = password;
 				doNext();
-			}, 120000);
+			}, 1000*60*5);
 		}
 	});
 	
