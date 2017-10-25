@@ -1,14 +1,15 @@
-// Steam Multi-user Multi-game hourboost by MetalRuller
-
-// Dont edit below.
-
-
 
 const utils = require("../bin/util.js");
 const SteamUser = require("steam-user");
 const config = require("../cfg/settings.js");
 const configChecker = require("../bin/configChecker.js");
 const SteamTotp = require("steam-totp");
+const readline = require('readline');
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
 
 const testConfig = configChecker.checkConfig(config);
 if(testConfig !== "fine") {
@@ -137,23 +138,38 @@ function doUserLogin(username, password) {
 		}
 	}
 	
-	if(typeof(config.TwofacSecrets[username]) === "string") {
-		client.options.promptSteamGuardCode = false;
-		client.on('steamGuard', function(domain, callback, lastCodeWrong) {
-			if(lastCodeWrong == true) {
-				utils.print("error", "Failed to generate steamguard code for " + username + ", skipping");
-				setTimeout(function() {
-					delete actionTodo[username];
-					client.logOff();
-					delete client;
-					doNext();
-				}, 120000);
-				return;
-			}
-			var code = SteamTotp.generateAuthCode(config.TwofacSecrets[username]);
-			callback(code);
-		});
-	}
+	client.options.promptSteamGuardCode = false;
+	
+	client.on('steamGuard', function(domain, callback, lastCodeWrong) {
+		if(lastCodeWrong == true) {
+			utils.print("error", "Failed to generate steamguard code for " + username + ", skipping");
+			setTimeout(function() {
+				delete actionTodo[username];
+				client.logOff();
+				delete client;
+				doNext();
+			}, 120000);
+			return;
+		}
+		var code;
+		if(typeof(config.TwofacSecrets[username]) !== "string") {
+			var tm = setTimeout(function() {
+				rl.close();
+				console.log("\n");
+				utils.print('error', 'Couldnt get SteamGuard code for ${username}. skipping entirely');
+				delete actionTodo[username];
+				client.logOff();
+				delete client;
+				doNext();
+			}, 180*1000);
+			rl.question(`Enter SteamGuard code for ${username} > ${domain} : `, (answer) => {
+			  rl.close();
+			  clearTimeout(tm);
+			  code = answer;
+			  callback(code);
+			});
+		} else { code = SteamTotp.generateAuthCode(config.TwofacSecrets[username]); callback(code); }
+	});
 	
 	client.on('loggedOn', function(details) {
 		users.push(client);
@@ -170,7 +186,7 @@ function doUserLogin(username, password) {
 	
 	client.on("playingState", function(blocked) {
 		if(blocked === true) {
-			utils.print("warn", "Stopped botting on " + username + ", started game elsewhere, skipping in 5m");
+			utils.print("warn", "Stopped botting on " + username + ", started game elsewhere, skipping in 30m");
 			client.setPersona(SteamUser.EPersonaState.Online);
 			client.logOff();
 			delete client;
@@ -178,7 +194,7 @@ function doUserLogin(username, password) {
 			setTimeout(function() {
 				actionTodo[username] = password;
 				doNext();
-			}, 1000*60*5);
+			}, 1000*60*30);
 		}
 	});
 	
@@ -200,6 +216,12 @@ function doUserLogin(username, password) {
 				actionTodo[username] = password;
 				doNext();
 			}, 120000);
+		} else if(String(e).toLowerCase() === "Error: InvalidAuthCode".toLowerCase()) {
+			utils.print("warn", "Ignoring. can't login");
+			client.logOff();
+			delete client;
+			delete actionTodo[username];
+			setTimeout(function() { doNext(); }, 5000);
 		}
 	});
 	client.logOn(_c);

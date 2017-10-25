@@ -22,7 +22,7 @@ configChecker.checkConfig = function(obj) {
 	}
 	
 	if(typeof(obj["Games"]) !== "object" || utils.isArray(obj["Games"]) !== false) {
-		err = err + "\nAccounts not defined or wrongly defined";
+		err = err + "\nGames not defined or wrongly defined";
 	}
 	
 	if(typeof(obj["TwofacSecrets"]) !== "object" || utils.isArray(obj["TwofacSecrets"]) !== false) {
