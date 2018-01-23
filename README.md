@@ -20,5 +20,4 @@
 **All contribution is highly appreciated**
 <br>
 [Steam Profile](http://steamcommunity.com/profiles/76561198082642088/)<br>
-Discord : 777#7777 (Add as friend)<br>
 [My Discord Server](https://discord.gg/FTfzN3c)<br>
