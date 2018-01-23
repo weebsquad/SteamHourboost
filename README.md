@@ -12,7 +12,6 @@
 * [Steam-ToTp](https://github.com/DoctorMcKay/node-steam-totp)
 
 **Todo:**
-* Multi-game support
 * Write a better readme.md
 * Write a installation guide
 
