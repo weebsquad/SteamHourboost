@@ -1,4 +1,4 @@
-
+const MAKE_APPLICATION_SPEEDY = true;
 const utils = require("../bin/util.js");
 const SteamUser = require("steam-user");
 const config = require("../cfg/settings.js");
