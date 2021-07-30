@@ -130,7 +130,7 @@ function print(mode, text)
 	config.output_log.forEach(function(value) {
 		if(value && value == mode) {
 			if(fs.existsSync(config.log_file) !== true) {
-				fs.writeFile(config.log_file, nl);
+				fs.writeFileSync(config.log_file, nl);
 			}
 			fs.appendFile(config.log_file, nl + format, function (err)
 			{
